@@ -1,0 +1,73 @@
+@startuml
+together{
+    class ArraysAndHashing
+}
+together{
+    class 2Pointers 
+    class Stack {
+        monotonic stack
+    }
+}
+together{
+    class SlidingWindow
+    class LinkedList
+    class BinarySearch
+}
+together{
+    class Trees {
+        preorder, inorder, postorder
+    }
+}
+together{
+    class Tries
+    class Heap
+    class DFS
+    class BFS
+}
+
+together{
+    class Matrix
+    class Graph {
+        dijkstra
+    }
+}
+
+ArraysAndHashing -down-> 2Pointers
+ArraysAndHashing -down-> Stack
+2Pointers -down-> SlidingWindow
+2Pointers -down-> LinkedList
+2Pointers -down-> BinarySearch
+LinkedList -down-> Trees
+BinarySearch -down-> Trees
+Trees -down-> Tries
+Trees -down-> Heap
+Trees -down-> DFS
+Trees -down-> BFS
+BFS -down-> Matrix
+DFS -down-> Matrix
+BFS -down-> Graph
+DFS -down-> Graph
+Graph -down-> Backtracking
+Matrix -down-> Backtracking
+Graph -down-> DynamicProgramming
+Matrix -down-> DynamicProgramming
+DynamicProgramming -down-> FibonacciSubsequence
+DynamicProgramming -down-> KadanesAlgorithm
+DynamicProgramming -down-> BoundedKnapsack
+DynamicProgramming -down-> UnboundedKnapsack
+DynamicProgramming -down-> LongestCommonSubsequence
+DynamicProgramming -down-> LongestIncreasingSubsequence
+DynamicProgramming -down-> PalindromicSubsequence
+DynamicProgramming -down-> EditDistance
+DynamicProgramming -down-> SubsetSum
+DynamicProgramming -down-> StringPartition
+DynamicProgramming -down-> CatalanNumbers
+DynamicProgramming -down-> MatrixChainMultiplication
+DynamicProgramming -down-> CountDistinctWays
+DynamicProgramming -down-> DPOnGrids
+DynamicProgramming -down-> DPOnTrees
+DynamicProgramming -down-> DPOnGraphs
+DynamicProgramming -down-> DigitDP
+DynamicProgramming -down-> BitmaskingDP
+DynamicProgramming -down-> ProbabilityDP
+DynamicProgramming -down-> StateMachineDP
