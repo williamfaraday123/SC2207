@@ -1,8 +1,10 @@
 /* 
+Heapsort is based on binary heap data structure.
 The heap sort algorithm consists of two phases. 
-In the first phase, the array is converted into a max heap.
-In the second phase, the highest element is removed (i.e., the one at the tree root) and the remaining elements are used to create a new max heap
+1. In the first phase, the array is converted into a max heap.
+2. In the second phase, the highest element is removed (i.e., the one at the tree root) and the remaining elements are used to create a new max heap
  */
+
 void swap(int* a, int* b) {
     int temp = *a;
     *a = *b;
