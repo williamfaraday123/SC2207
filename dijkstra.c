@@ -95,7 +95,7 @@ void heapifyDown(struct vertex* minHeap, int heapSize, int root) {
         heapifyDown(minHeap, heapSize, smallest);
     }
 }
-void heapifyUp(struct vertex* minHeap, int heapSize, int v)  {
+void heapifyUp(struct vertex* minHeap, int v)  {
     int i = v;
     while (i > 0 && minHeap[(i - 1) / 2].dist > minHeap[i].dist) {
         swap(&minHeap[(i - 1) / 2], &minHeap[i]);
@@ -147,7 +147,7 @@ void dijkstra(int graph[V][V], int src) {
 
                 //fix heap according to updated distance of vertex v
                 //heapifyUp: check if vertex v is still smaller than children, then recursively check its parent
-                heapifyUp(minHeap, heapSize, v); //O(log V)
+                heapifyUp(minHeap, v); //O(log V)
             }
         }
     }
