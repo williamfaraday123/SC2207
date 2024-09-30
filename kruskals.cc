@@ -7,8 +7,10 @@
 3) Repeat step 2 until there are V-1 edges in MST
  */
 
+#include <vector>
 using namespace std;
 
+//QuickUnion data structure used for cycle detection
 class QuickUnion {
 
 public:
@@ -16,9 +18,11 @@ public:
     int* size; //size[v] = size of quickunion tree rooted at vertex v
 
     QuickUnion(int numVertices) {
+        id = malloc(numVertices * sizeof(int));
+        size = malloc(numVertices * sizeof(int));
         for(int i = 0; i < numVertices; i++) {
             id[i] = i; //initialise id of i = i since i has no parent
-            size[i] = 1;
+            size[i] = 1; //each vertex starts as a single node tree
         }
     }
 
@@ -38,7 +42,7 @@ public:
         //balance by linking root of smaller tree to root of larger tree
         int pRoot = find(p);
         int qRoot = find(q);
-        if (pRoot == qRoot) {
+        if (pRoot == qRoot) { //already connected
             return;
         }
         if (size[pRoot] < size[qRoot]) {
@@ -59,39 +63,48 @@ public:
     }
 };
 
+//minHeap used for selecting the shortest edge efficiently
 class minHeap {
 public:
     vector<vector<int>> arr;
     int size;
+
     minHeap(): size(0) {}
+
     void swap(vector<int>& e1, vector<int>& e2) {
         vector<int> temp = e1;
         e1 = e2;
         e2 = temp;
     }
+
     void heapifyUp(int e) {
         while (e > 0 && arr[e][2] < arr[(e - 1) / 2][2]) {
             swap(arr[e], arr[(e - 1) / 2]);
             e = (e - 1) / 2;
         }
     }
+
     void heapifyDown(int root) {
         int smallest = root;
         int leftChildIndex = 2 * root + 1;
         int rightChildIndex = 2 * root + 2;
-        if (arr[leftChildIndex][2] < arr[smallest][2]) {
+
+        if (leftChildIndex < size && arr[leftChildIndex][2] < arr[smallest][2]) {
             smallest = leftChildIndex;
         }
-        if (arr[rightChildIndex][2] < arr[smallest][2]) {
+        if (rightChildIndex < size && arr[rightChildIndex][2] < arr[smallest][2]) {
             smallest = rightChildIndex;
         }
+
         if (smallest != root) {
             swap(arr[root], arr[smallest]);
             heapifyDown(smallest);
         }
     }
+
     vector<int> heapDeleteRoot() {
         vector<int> root = arr[0];
+        swap(arr[0], arr[size - 1]); // swap root with last element
         size--;
         heapifyDown(0);
         return root;
@@ -104,7 +117,7 @@ public:
     vector<vector<int>> kruskals(int** graph, int V) {
 
         //use min heap to store edgelist, where edge with min length will be root of heap
-        minHeap edgeList();
+        minHeap edgeList;
 
         vector<vector<int>> mst;
 
@@ -126,8 +139,8 @@ public:
             int v1 = shortestEdge[0];
             int v2 = shortestEdge[1];
             if (!quickUnion.connected(v1, v2)) { //check if shortestEdge forms a cycle with mst O(E log V)
-                //if no cycle, add edge to mst and mark the 2 vertices v1 and v2 as connected in quickUnion
-                quickUnion.union(v1, v2); //O(V log V)
+                //if no cycle, add edge to mst and unite the 2 vertices v1 and v2 in quickUnion
+                quickUnion.unite(v1, v2); //O(V log V)
                 mst.push_back(shortestEdge); //O(V)
             }
         }
